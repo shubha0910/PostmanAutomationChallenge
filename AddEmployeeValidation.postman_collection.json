@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "3a9fa546-e35b-481a-9ac7-4a4712107e83",
+		"name": "AddEmployeeValidation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "S1AddEmployeeMissingRequiredFields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7c8e387-492c-48c8-a524-4ce0034076c7",
+						"exec": [
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"The FirstName field is required.\");\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"The LastName field is required.\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "befe82d4-7013-492b-a8ba-ebedddf6387e",
+						"exec": [
+							"\r",
+							"pm.environment.set(\"FName\", \"\");\r",
+							"pm.environment.set(\"LName\", \"\");\r",
+							"\r",
+							"pm.environment.unset(\"Dep\");\r",
+							"pm.environment.set(\"Dep\", \"3\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic VGVzdFVzZXI0MDojI2xzXj8vRiNpWDc=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"{{FName}}\",\r\n    \"lastName\": \"{{LName}}\",\r\n    \"dependants\": {{Dep}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees",
+					"protocol": "https",
+					"host": [
+						"wmxrwq14uc",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"Prod",
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S2AddEmployeeOutOfRangeDependents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "410b875c-936f-4897-94cc-fd09e2b4dd28",
+						"exec": [
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"The field Dependants must be between 0 and 32\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1afd05df-3a7a-4e97-a7a3-a39c5cb368a7",
+						"exec": [
+							"pm.environment.set(\"FName\", \"Thomas\");\r",
+							"pm.environment.set(\"LName\", \"Edison\");\r",
+							"\r",
+							"pm.environment.unset(\"Dep\");\r",
+							"pm.environment.set(\"Dep\", \"33\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic VGVzdFVzZXI0MDojI2xzXj8vRiNpWDc=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"{{FName}}\",\r\n    \"lastName\": \"{{LName}}\",\r\n    \"dependants\": {{Dep}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees",
+					"protocol": "https",
+					"host": [
+						"wmxrwq14uc",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"Prod",
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S3AddValidEmployeeData",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd9cdef9-b9d2-405f-b831-fee8f4c7beee",
+						"exec": [
+							"//Check if API request is done successfully\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Check to see if we have all the required fields/entities in response body of AddEmployee request\r",
+							"pm.test(\"Id variable is in response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"First Name variable is in response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"firstName\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Last Name variable is in response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"lastName\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Depndents variable is in response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"dependents\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Salary variable is in response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"salary\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Gross variable is in response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"gross\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Benefits cost variable is in response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"benefitsCost\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Net variable is in response\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"net\");\r",
+							"});\r",
+							"\r",
+							"//Declare variables to store the values given in environment variable as input in request of AddEmployee API\r",
+							"var fn= pm.environment.get(\"FName\");\r",
+							"var ln = pm.environment.get(\"LName\");\r",
+							"var depen = pm.environment.get(\"Dep\");\r",
+							"JSON.stringify(depen);\r",
+							"\r",
+							"const body = pm.response.json();\r",
+							"//Verify the response body of Add Employee has appropriate values added\r",
+							"pm.test(\"Expects the FirstName in response to match with First name in request\", function() {\r",
+							"    pm.expect(body).to.have.property(\"firstName\",fn );\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Expects the LastName in response to match with last name in request \", function() {\r",
+							"    pm.expect(body).to.have.property(\"lastName\",ln );\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Expects the Depndents in response to match with Dependents in request\", function() {\r",
+							"    pm.expect(body).to.have.property(\"dependants\",JSON.parse(depen) );\r",
+							"});\r",
+							"\r",
+							"//Benefit Calcualtion Formulas\r",
+							"\r",
+							"var ExpectedSalary = pm.globals.get(\"ExpectedGrossPay\") * pm.globals.get(\"NumberOfPayChecks\");\r",
+							"\r",
+							"var DeductibleAmountperEmployeeperPaycheck = pm.globals.get(\"DeductibleAmountperEmployee\")/pm.globals.get(\"NumberOfPayChecks\");\r",
+							"\r",
+							"var DeductibleAmountDependentperPaycheck = pm.globals.get(\"DeductibleAmountDependentperYear\") * depen/pm.globals.get(\"NumberOfPayChecks\");\r",
+							"\r",
+							"var BenifitsCost = DeductibleAmountperEmployeeperPaycheck + DeductibleAmountDependentperPaycheck;\r",
+							"\r",
+							"\r",
+							"var ExpectedNetPay = pm.globals.get(\"ExpectedGrossPay\") - BenifitsCost;\r",
+							"\r",
+							"//Verify to see if all the cost in response body matches with the calculations\r",
+							"pm.test(\"Actual  Salary in response to match with Expected Salary as per calcualtion\", function() {\r",
+							"    pm.expect(body).to.have.property(\"salary\",ExpectedSalary );\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Actual Gross pay in response to match with Expected Gross pay as per calcualtion\", function() {\r",
+							"    pm.expect(body).to.have.property(\"gross\",JSON.parse(pm.globals.get(\"ExpectedGrossPay\")) );\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Actual Benifits Cost  in response to match with Expected Benifits Cost as per calcualtion\", function() {\r",
+							"    pm.expect(body).to.have.property(\"benefitsCost\",JSON.parse(BenifitsCost.toFixed(5)));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Actual Net Pay  in response to match with Expected Net Pay as per calcualtion\", function() {\r",
+							"    pm.expect(body).to.have.property(\"net\",JSON.parse(ExpectedNetPay.toFixed(4)));\r",
+							"});\r",
+							"\r",
+							"\r",
+							"var IdvalueFromAddEmployeeResponse = pm.response.id;\r",
+							"\r",
+							"//Validation to check if the employee added through AddEmployee API is actually added by trying to Get the employee details.\r",
+							"\r",
+							"pm.sendRequest(\"https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees/IdvalueFromAddEmployeeResponse\", function (err, response) {\r",
+							"    console.log(pm.response.json());\r",
+							"    const GetEmployeeBody = pm.response.json();\r",
+							"\r",
+							"    pm.test(\"FirstName in  GET Employee API response  match with First name added in AddEmployee API\", function() {\r",
+							"    pm.expect(GetEmployeeBody).to.have.property(\"firstName\",fn);});\r",
+							"\r",
+							"    pm.test(\"LastName in  GET Employee API response  match with Last name added in AddEmployee API\", function() {\r",
+							"    pm.expect(GetEmployeeBody).to.have.property(\"lastName\",ln);});\r",
+							"\r",
+							"    pm.test(\"Dependents in  GET Employee API response  match with Dependents added in AddEmployee API\", function() {\r",
+							"    pm.expect(GetEmployeeBody).to.have.property(\"dependants\",JSON.parse(depen));\r",
+							"});\r",
+							"});\r",
+							"\r",
+							"//console.log(IdvalueFromAddEmployeeResponse);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4de9bac0-6d98-41d4-a8a2-cdcb6a34d992",
+						"exec": [
+							"pm.environment.unset(\"Dep\");\r",
+							"pm.environment.set(\"Dep\", \"2\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic VGVzdFVzZXI0MDojI2xzXj8vRiNpWDc=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"{{FName}}\",\r\n    \"lastName\": \"{{LName}}\",\r\n    \"dependants\": {{Dep}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees",
+					"protocol": "https",
+					"host": [
+						"wmxrwq14uc",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"Prod",
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
