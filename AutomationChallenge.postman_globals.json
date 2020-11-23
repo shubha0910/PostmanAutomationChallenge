@@ -1,0 +1,29 @@
+{
+	"id": "e340fe48-adce-46aa-8793-6048eedf1c7c",
+	"values": [
+		{
+			"key": "ExpectedGrossPay",
+			"value": "2000",
+			"enabled": true
+		},
+		{
+			"key": "NumberOfPayChecks",
+			"value": "26",
+			"enabled": true
+		},
+		{
+			"key": "DeductibleAmountperEmployee",
+			"value": "1000",
+			"enabled": true
+		},
+		{
+			"key": "DeductibleAmountDependentperYear",
+			"value": "500",
+			"enabled": true
+		}
+	],
+	"name": "AutomationChallenge Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2020-11-22T23:38:11.222Z",
+	"_postman_exported_using": "Postman/8.0.0-201120-1518"
+}

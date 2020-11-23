@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "c971190c-a78a-4847-b480-116cbb33ebfe",
-		"name": "Delete Employee API",
+		"name": "DeleteEmployeeAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

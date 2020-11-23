@@ -1,0 +1,11 @@
+EmployeeWorkflow
+https://www.getpostman.com/collections/eb88127d472b5e8b530e
+
+AddEmployee
+https://www.getpostman.com/collections/181d6e87f2649b0b73b9
+
+UpdateEmployee
+https://www.getpostman.com/collections/dfcad1fb26ac3043e997
+
+DeleteEmployee
+https://www.getpostman.com/collections/cae48e796bbf06c8599b
